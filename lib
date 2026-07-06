@@ -162,7 +162,7 @@ local Library; do
             ["TextMisc"] = Color3.fromRGB(150, 150, 150),
             ["TextMain"] = Color3.fromRGB(200, 200, 200),
 
-            ["Accent"] = Color3.fromRGB(93, 96, 179),
+            ["Accent"] = Color3.fromRGB(255, 164, 75),
         },
         Utility = {},
         GradientsThemes = {}, 
