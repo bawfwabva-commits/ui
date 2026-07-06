@@ -342,7 +342,7 @@ local Library; do
 
         Fonts.Main = Fonts:New("Inter_28pt", 480, "Regular", {
             Id = "Inter_28pt",
-            Url = "https://github.com/i77lhm/storage/blob/refs/heads/main/fonts/Tahoma-Modern-Bold.ttf" -- // Main font
+            Url = "https://github.com/i77lhm/storage/blob/refs/heads/main/fonts/Minecraftia-Regular.ttf" -- // Main font
         })
     end
 
