@@ -1,0 +1,94 @@
+-- =============================================================================
+-- ОСНОВНОЕ МЕНЮ ЧИТА (ПОДГРУЖАЕТСЯ ПОСЛЕ КЛЮЧА)
+-- =============================================================================
+
+-- Заново получаем чистый инстанс либы
+local uiLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bawfwabva-commits/ui/refs/heads/main/lib"))()
+local Library = uiLib
+
+-- Сохраняем в getgenv, чтобы скрипты не конфликтовали
+getgenv().Library = Library
+
+-- Настройки плавности и кастомный фиолетовый акцент
+Library.TweeningSpeed = 0.3
+Library.Themes.Preset["Accent"] = Color3.fromRGB(93, 96, 179)
+
+-- Создаем полноценное большое окно чита
+local Window = Library:CreateWindow({
+    Prefix = "петя", 
+    Suffix = " .стендик2", 
+    Size = UDim2.new(0, 559, 0, 668), 
+    Position = UDim2.fromScale(0.5, 0.3), 
+    AnchorPoint = Vector2.new(0.5, 0.3)
+})
+
+----------------------------------------------------------------                
+-- [ВКЛАДКИ МЕНЮ]
+----------------------------------------------------------------
+local Combat = Window:AddTab({Title = "Combat", Columns = 2})
+local Visuals = Window:AddTab({Title = "Visuals", Columns = 2})
+
+----------------------------------------------------------------                
+-- [ВКЛАДКА: COMBAT]
+----------------------------------------------------------------
+-- Левая колонка (Side = 1)
+local MainSection = Combat:AddSection({Title = "Main Controls", Side = 1})
+
+MainSection:AddToggle({Text = "Aimbot", Flag = "AimbotToggle", Default = false, Callback = function(state)
+    print("Aimbot:", state)
+end})
+
+MainSection:AddSlider({Text = "FOV", Flag = "AimbotFOV", Min = 0, Max = 180, Rounding = 1, Default = 90, Suffix = "°", Callback = function(val)
+    print("FOV changed to:", val)
+end})
+
+MainSection:AddToggle({Text = "Silent Aim", Flag = "SilentAimToggle", Default = false, Callback = function(state)
+    print("Silent Aim:", state)
+end})
+
+-- Правая колонка (Side = 2)
+local TriggerSection = Combat:AddSection({Title = "Triggerbot", Side = 2})
+
+TriggerSection:AddToggle({Text = "Triggerbot", Flag = "TriggerToggle", Default = false, Callback = function(state)
+    print("Triggerbot:", state)
+end})
+
+TriggerSection:AddSlider({Text = "Delay", Flag = "TriggerDelay", Min = 0, Max = 500, Rounding = 5, Default = 50, Suffix = "ms", Callback = function(val)
+    print("Trigger Delay:", val)
+end})
+
+----------------------------------------------------------------                
+-- [ВКЛАДКА: VISUALS]
+----------------------------------------------------------------
+-- Левая колонка (Side = 1)
+local VisualFeatureSection = Visuals:AddSection({Title = "ESP Features", Side = 1})
+
+local BoxToggle = VisualFeatureSection:AddToggle({Text = "Box ESP", Flag = "BoxEsp", Default = false, Callback = function(state)
+    print("Box ESP:", state)
+end})
+
+-- Колорпикер прямо в тогле боксов
+BoxToggle:AddColorPicker({Text = "Box Color", Flag = "BoxColor", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = function(color)
+    print("Box Color changed:", color)
+end})
+
+VisualFeatureSection:AddToggle({Text = "Names", Flag = "EspNames", Default = false, Callback = function(state)
+    print("ESP Names:", state)
+end})
+
+VisualFeatureSection:AddToggle({Text = "Tracer Lines", Flag = "EspTracers", Default = false, Callback = function(state)
+    print("ESP Tracers:", state)
+end})
+
+----------------------------------------------------------------                
+-- [ИНИЦИАЛИЗАЦИЯ И ЗАПУСК]
+----------------------------------------------------------------
+-- Запускаем генерацию панелей. На этот раз вкладка Settings создастся 
+-- полностью легитимно, со всеми дефолтными секциями (Configs, Menu, HUD, Theming).
+Window:InitPanels()
+
+-- Автоматически подгружаем сохраненный конфиг, если он есть
+Library:AutoLoad()
+
+-- Уведомление об успешном запуске
+Library:Notify({Text = "Havoc Beta successfully loaded! Enjoy.", Lifetime = 4})
