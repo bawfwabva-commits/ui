@@ -27,6 +27,18 @@ MainSection:AddToggle({Text = "Silent Aim", Flag = "SilentAimToggle", Default = 
     print("Silent Aim:", state)
 end})
 
+MainSection:AddKeyPicker({Text = "Toggle Keybind", Flag = "Example Toggle Keybind", Key = Enum.KeyCode.Q, Mode = "Toggle", Active = false, ShowInList = true, Callback = function(state)
+    print("Silent Aim:", state)
+end})
+
+MainSection:AddKeyPicker({Text = "Hold Keybind", Flag = "Example Hold Keybind", Key = Enum.KeyCode.LeftAlt, Mode = "Hold", Active = false, ShowInList = true, Callback = function(state)
+    print("Silent Aim:", state)
+end})
+
+MainSection:AddKeyPicker({Text = "Always Keybind", Flag = "Example Always Keybind", Key = Enum.KeyCode.LeftShift, Mode = "Always", Active = true, ShowInList = true, Callback = function(state)
+    print("Silent Aim:", state)
+end})
+
 local TriggerSection = Combat:AddSection({Title = "Triggerbot", Side = 2})
 
 TriggerSection:AddToggle({Text = "Triggerbot", Flag = "TriggerToggle", Default = false, Callback = function(state)
