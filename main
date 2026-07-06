@@ -9,11 +9,11 @@ local Window = Library:CreateWindow({
     AnchorPoint = Vector2.new(0.5, 0.3)
 })
 
-local Combat = Window:AddTab({Title = "Combat", Columns = 1})
-local Visuals = Window:AddTab({Title = "Visuals", Columns = 1})
-local Movement = Window:AddTab({Title = "Movement", Columns = 1})
-local Misc = Window:AddTab({Title = "Misc", Columns = 1})
-local Utility = Window:AddTab({Title = "Utility", Columns = 1})
+local Combat = Window:AddTab({Title = "Combat", Columns = 2})
+local Visuals = Window:AddTab({Title = "Visuals", Columns = 2})
+local Movement = Window:AddTab({Title = "Movement", Columns = 2})
+local Misc = Window:AddTab({Title = "Misc", Columns = 2})
+local Utility = Window:AddTab({Title = "Utility", Columns = 2})
 
 Window:InitPanels()
 Library:AutoLoad()
