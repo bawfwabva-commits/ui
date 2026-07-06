@@ -1,21 +1,171 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bawfwabva-commits/ui/refs/heads/main/lib"))()
-getgenv().Library = Library
+local uiLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/0x3u-debug/Roblox/refs/heads/main/uiLib"))()
 
-local Window = Library:CreateWindow({
-    Prefix = "Akatsuki.", 
-    Suffix = "havoc", 
-    Size = UDim2.new(0, 559, 0, 668)
-    Position = UDim2.fromScale(0.5, 0), 
-    AnchorPoint = Vector2.new(0.5, 0)
-})
+local Window = uiLib:CreateWindow({Prefix = "Verya", Suffix = ".gg", Size = UDim2.new(0, 559, 0, 668), Position = UDim2.fromScale(0.5, 0), AnchorPoint = Vector2.new(0.5, 0)})
 
 local Combat = Window:AddTab({Title = "Combat", Columns = 2})
 local Visuals = Window:AddTab({Title = "Visuals", Columns = 2})
-local Movement = Window:AddTab({Title = "Movement", Columns = 2})
 local Misc = Window:AddTab({Title = "Misc", Columns = 2})
-local Utility = Window:AddTab({Title = "Utility", Columns = 2})
+
+local MainSection = Combat:AddSection({Title = "Main Controls", Side = 1})
+MainSection:AddLabel({Text = "Label"})
+MainSection:AddToggle({Text = "Toggle", Flag = "Example Toggle", Default = false, Callback = print})
+MainSection:AddToggle({Text = "Enabled Toggle", Flag = "Example Enabled Toggle", Default = true, Callback = print})
+MainSection:AddToggle({Text = "Tooltip Toggle", Flag = "Example Tooltip Toggle", Default = true, Callback = print}):Tooltip({Name = "One line tooltip"})
+MainSection:AddToggle({Text = "Multiline Tooltip Toggle", Flag = "Example Multiline Tooltip Toggle", Default = true, Callback = print}):Tooltip({Name = "Line one\nLine two\nLine three", MultiLine = true})
+local ColoredToggle = MainSection:AddToggle({Text = "Toggle With Colors", Flag = "Example Toggle With Colors", Default = false, Callback = print})
+ColoredToggle:AddColorPicker({Text = "Primary Color", Flag = "Example Primary Color", Default = Color3.fromRGB(245, 20, 136), Alpha = 0.5, Callback = print})
+ColoredToggle:AddColorPicker({Text = "Secondary Color", Flag = "Example Secondary Color", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = print})
+
+local KeyedToggle = MainSection:AddToggle({Text = "Toggle With Key", OVlag = "Example Keyed Toggle", Default = false, Callback = print})
+KeyedToggle:AddKeyPicker({Text = "Toggle Key", Flag = "Example Toggle Key", Key = Enum.KeyCode.E, Mode = "Toggle", Active = false, ShowInList = true, Callback = print})
+
+MainSection:AddSlider({Text = "Animated Slider", Flag = "Example Animated Slider", Min = 0, Max = 100, Rounding = 1, Default = 50, Suffix = "%", Callback = print})
+MainSection:AddSlider({Text = "Normal Slider", Flag = "Example Normal Slider", Min = -50, Max = 50, Decimal = 0.5, Default = 0, Suffix = "u", Type = "Normal", Callback = print})
+MainSection:AddRangeSlider({Text = "Range Slider", Flag = "Example Range Slider", Min = 0, Max = 1000, Rounding = 5, Default = {100, 800}, Suffix = "m", Callback = print})
+
+local InputSection = Combat:AddSection({Title = "Inputs And Selectors", Side = 1, Description = "Every basic field style in one place."})
+InputSection:AddInput({Text = "Focus Lost Input", Flag = "Example Focus Lost Input", PlaceHolder = "Type and press enter", FocusLost = true, ClearTextOnFocus = false, Callback = print})
+InputSection:AddInput({Text = "Live Input", Flag = "Example Live Input", PlaceHolder = "Updates while typing", FocusLost = false, ClearTextOnFocus = false, Callback = print})
+InputSection:AddDropdown({Text = "Single Dropdown", Flag = "Example Single Dropdown", Values = {"Option 1", "Option 2", "Option 3", "Option 4"}, Default = "Option 1", Multi = false, Callback = print})
+InputSection:AddDropdown({Text = "Multi Dropdown", Flag = "Example Multi Dropdown", Options = {"Option 1", "Option 2", "Option 3", "Option 4"}, Default = {"Option 1", "Option 3"}, Multi = true, Callback = print})
+InputSection:AddDropdown({Text = "Scrolling Dropdown", Flag = "Example Scrolling Dropdown", Values = {"Option 1", "Option 2", "Option 3", "Option 4", "Option 5", "Option 6", "Option 7", "Option 8", "Option 9", "Option 10", "Option 11", "Option 12"}, Default = "Option 1", Multi = false, Callback = print})
+InputSection:AddDropdown({Text = "Search Dropdown", Flag = "Example Search Dropdown", Values = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet", "Kilo", "Lima"}, Default = "Alpha", Multi = false, Search = true, Callback = print})
+InputSection:AddColorPicker({Text = "Animated Colorpicker", Flag = "Example Animated Colorpicker", Default = Color3.fromRGB(255, 0, 0), Transparency = 0.35, Callback = print})
+InputSection:AddColorPicker({Text = "Simple Colorpicker", Flag = "Example Simple Colorpicker", Default = Color3.fromRGB(0, 170, 255), Type = "Default", Callback = print})
+InputSection:AddKeyPicker({Text = "Toggle Keybind", Flag = "Example Toggle Keybind", Key = Enum.KeyCode.Q, Mode = "Toggle", Active = false, ShowInList = true, Callback = print})
+InputSection:AddKeyPicker({Text = "Hold Keybind", Flag = "Example Hold Keybind", Key = Enum.KeyCode.LeftAlt, Mode = "Hold", Active = false, ShowInList = true, Callback = print})
+InputSection:AddKeyPicker({Text = "Always Keybind", Flag = "Example Always Keybind", Key = Enum.KeyCode.LeftShift, Mode = "Always", Active = true, ShowInList = true, Callback = print})
+
+local ButtonSection = Combat:AddSection({Title = "Buttons And Lists", Side = 1})
+ButtonSection:AddButton({Text = "Button", Callback = function()
+    Library:Notify({Text = "Button clicked", Lifetime = 3})
+end})
+ButtonSection:AddButton({Text = "Confirm Button", Confirmation = true, Callback = function()
+    Library:Notify({Text = "Confirmed", Lifetime = 3})
+end})
+local TwoButtonRow = ButtonSection:AddButton({Text = "Button 1", Callback = print})
+TwoButtonRow:AddButton({Text = "Button 2", Callback = print})
+local ThreeButtonRow = ButtonSection:AddButton({Text = "Button 1", Callback = print})
+ThreeButtonRow:AddButton({Text = "Button 2", Callback = print})
+ThreeButtonRow:AddButton({Text = "Button 3", Callback = print})
+ButtonSection:AddList({Options = {"List 1", "List 2", "List 3", "List 4", "List 5"}, Multi = false, Callback = print})
+ButtonSection:AddList({Options = {"Multi 1", "Multi 2", "Multi 3", "Multi 4", "Multi 5", "Multi 6", "Multi 7", "Multi 8", "Multi 9", "Multi 10", "Multi 11", "Multi 12"}, Multi = true, Scrolling = true, Callback = print})
+
+local GroupSection = Combat:AddSection({Title = "Child Groups", Side = 2})
+local AimGroup
+GroupSection:AddToggle({Text = "Aimbot", Flag = "Example Aimbot", Default = false, Callback = function(Bool)
+    if AimGroup then
+        AimGroup:SetVisible(Bool)
+    end
+end})
+
+AimGroup = GroupSection:AddGroup({Indent = 10, Visible = false})
+AimGroup:AddToggle({Text = "Silent Aim", Flag = "Example Silent Aim", Default = false, Callback = print})
+AimGroup:AddSlider({Text = "FOV", Flag = "Example FOV", Min = 0, Max = 360, Rounding = 1, Default = 90, Suffix = "deg", Type = "Normal", Callback = print})
+AimGroup:AddRangeSlider({Text = "Damage Range", Flag = "Example Damage Range", Min = 0, Max = 100, Rounding = 1, Default = {25, 75}, Suffix = "%", Callback = print})
+AimGroup:AddInput({Text = "Target Name", Flag = "Example Target Name", PlaceHolder = "Player name", FocusLost = true, Callback = print})
+AimGroup:AddDropdown({Text = "Hitbox", Flag = "Example Hitbox", Values = {"Head", "Torso", "Closest"}, Default = "Head", Callback = print})
+AimGroup:AddKeyPicker({Text = "Aim Key", Flag = "Example Aim Key", Key = Enum.UserInputType.MouseButton2, Mode = "Hold", Active = false, ShowInList = true, Callback = print})
+AimGroup:AddColorPicker({Text = "FOV Color", Flag = "Example FOV Color", Default = Color3.fromRGB(245, 20, 136), Callback = print})
+
+AimGroup:AddButton({Text = "Aim Group Button", Callback = function()
+    Library:Notify({Text = "Aimbot child group button", Lifetime = 3})
+end})
+
+local TriggerGroup
+GroupSection:AddToggle({Text = "Triggerbot", Flag = "Example Triggerbot", Default = true, Callback = function(Bool)
+    if TriggerGroup then
+        TriggerGroup:SetVisible(Bool)
+    end
+end})
+
+TriggerGroup = GroupSection:AddGroup({Indent = 10, Visible = true})
+TriggerGroup:AddToggle({Text = "Wall Check", Flag = "Example Wall Check", Default = true, Callback = print})
+TriggerGroup:AddSlider({Text = "Delay", Flag = "Example Trigger Delay", Min = 0, Max = 500, Rounding = 5, Default = 100, Suffix = "ms", Type = "Normal", Callback = print})
+TriggerGroup:AddButton({Text = "Trigger Test", Callback = function()
+    Library:Notify({Text = "Trigger group button", Lifetime = 3})
+end})
+
+local NestedGroup
+TriggerGroup:AddToggle({Text = "Advanced", Flag = "Example Trigger Advanced", Default = false, Callback = function(Bool)
+    if NestedGroup then
+        NestedGroup:SetVisible(Bool)
+    end
+end})
+
+NestedGroup = TriggerGroup:AddGroup({Indent = 10, Visible = false})
+NestedGroup:AddToggle({Text = "Burst Fire", Flag = "Example Burst Fire", Default = false, Callback = print})
+NestedGroup:AddSlider({Text = "Burst Count", Flag = "Example Burst Count", Min = 1, Max = 5, Rounding = 1, Default = 2, Type = "Normal", Callback = print})
+
+local RageSection, LegitSection, UtilitySection = Combat:AddMultiSection({Names = {"Rage", "Legit", "Utility"}, Side = 2})
+RageSection:AddToggle({Text = "Rage Toggle", Flag = "Example Rage Toggle", Default = false, Callback = print})
+RageSection:AddSlider({Text = "Rage Power", Flag = "Example Rage Power", Min = 0, Max = 100, Rounding = 1, Default = 75, Suffix = "%", Callback = print})
+LegitSection:AddToggle({Text = "Legit Toggle", Flag = "Example Legit Toggle", Default = true, Callback = print})
+LegitSection:AddDropdown({Text = "Legit Mode", Flag = "Example Legit Mode", Values = {"Smooth", "Balanced", "Strict"}, Default = "Balanced", Callback = print})
+UtilitySection:AddList({Options = {"Utility 1", "Utility 2", "Utility 3", "Utility 4", "Utility 5", "Utility 6"}, Multi = true, Callback = print})
+UtilitySection:AddButton({Text = "Notify", Callback = function()
+    Library:Notify({Text = "Multi section notification", Lifetime = 3})
+end})
+
+local Preview
+local UpdatePreview = function()
+    if Preview then
+        Preview.Update()
+    end
+end
+
+local VisualFeatureSection = Visuals:AddSection({Title = "Preview Features", Side = 1})
+VisualFeatureSection:AddToggle({Text = "Enabled", Flag = "Esp Enabled", Default = false, Callback = UpdatePreview})
+local BoxToggle = VisualFeatureSection:AddToggle({Text = "Box", Flag = "Box", Default = false, Callback = UpdatePreview})
+BoxToggle:AddColorPicker({Text = "High Contrast Box", Flag = "High Contrast Box", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = UpdatePreview})
+BoxToggle:AddColorPicker({Text = "Low Contrast Box", Flag = "Low Contrast Box", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = UpdatePreview})
+local BoxFillToggle = VisualFeatureSection:AddToggle({Text = "Box Fill", Flag = "Box Fill", Default = false, Callback = UpdatePreview})
+BoxFillToggle:AddColorPicker({Text = "High Contrast Fill", Flag = "High Contrast Fill", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = UpdatePreview})
+BoxFillToggle:AddColorPicker({Text = "Low Contrast Fill", Flag = "Low Contrast Fill", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = UpdatePreview})
+local BoxGlowToggle = VisualFeatureSection:AddToggle({Text = "Box Glow", Flag = "Box Glow", Default = false, Callback = UpdatePreview})
+BoxGlowToggle:AddColorPicker({Text = "High Contrast Glow", Flag = "High Contrast Glow", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = UpdatePreview})
+BoxGlowToggle:AddColorPicker({Text = "Low Contrast Glow", Flag = "Low Contrast Glow", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = UpdatePreview})
+local HealthbarToggle = VisualFeatureSection:AddToggle({Text = "Healthbar", Flag = "Healthbar", Default = false, Callback = UpdatePreview})
+HealthbarToggle:AddColorPicker({Text = "High Health", Flag = "High Health", Default = Color3.fromRGB(0, 255, 0), Alpha = 0.5, Callback = UpdatePreview})
+HealthbarToggle:AddColorPicker({Text = "Mid Health", Flag = "Mid Health", Default = Color3.fromRGB(255, 165, 0), Alpha = 0.5, Callback = UpdatePreview})
+HealthbarToggle:AddColorPicker({Text = "Low Health", Flag = "Low Health", Default = Color3.fromRGB(255, 0, 0), Alpha = 0.5, Callback = UpdatePreview})
+VisualFeatureSection:AddToggle({Text = "Healthbar Text", Flag = "Healthbar Text", Default = false, Callback = UpdatePreview})
+local NamesToggle = VisualFeatureSection:AddToggle({Text = "Names", Flag = "Names", Default = false, Callback = UpdatePreview})
+NamesToggle:AddColorPicker({Text = "Names Text Color", Flag = "Names Text Color", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = UpdatePreview})
+local DistanceToggle = VisualFeatureSection:AddToggle({Text = "Distance Text", Flag = "Distance Text", Default = false, Callback = UpdatePreview})
+DistanceToggle:AddColorPicker({Text = "Distance Text Color", Flag = "Distance Text Color", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = UpdatePreview})
+local WeaponToggle = VisualFeatureSection:AddToggle({Text = "Weapon Text", Flag = "Weapon Text", Default = false, Callback = UpdatePreview})
+WeaponToggle:AddColorPicker({Text = "Weapon Text Color", Flag = "Weapon Text Color", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = UpdatePreview})
+local FlagsToggle = VisualFeatureSection:AddToggle({Text = "Flags", Flag = "Flags", Default = false, Callback = UpdatePreview})
+FlagsToggle:AddColorPicker({Text = "Flags Text Color", Flag = "Flags Text Color", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = UpdatePreview})
+
+local VisualOtherSection = Visuals:AddSection({Title = "Preview Settings", Side = 1})
+VisualOtherSection:AddSlider({Text = "Box Gradient Rotation", Flag = "Box Gradient Rotation", Min = -180, Max = 180, Rounding = 1, Default = 0, Suffix = "deg", Type = "Normal", Callback = UpdatePreview})
+VisualOtherSection:AddSlider({Text = "Box Fill Rotation", Flag = "Box Fill Rotation", Min = -180, Max = 180, Rounding = 1, Default = 0, Suffix = "deg", Type = "Normal", Callback = UpdatePreview})
+VisualOtherSection:AddSlider({Text = "Box Glow Rotation", Flag = "Box Glow Rotation", Min = -180, Max = 180, Rounding = 1, Default = 0, Suffix = "deg", Type = "Normal", Callback = UpdatePreview})
+
+local PreviewSection = Visuals:AddSection({Title = "Preview", Side = 2})
+Preview = PreviewSection:AddPreview({Height = 300})
+UpdatePreview()
+
+local PlayerSection = Misc:AddSection({Title = "Player List", Side = 1})
+PlayerSection:Playerlist({Size = 180})
+
+local ImageSection = Misc:AddSection({Title = "Image Box", Side = 2})
+local ImageBox = ImageSection:ImageBox({Image = "rbxassetid://82574858136292"})
+ImageBox.LeftElements:AddLabel({Text = "Left Label"})
+ImageBox.LeftElements:AddInput({Flag = "Example ImageBox Input", PlaceHolder = "ImageBox input", FocusLost = true, Callback = print})
+ImageBox.RightElements:AddDropdown({Text = "Right Dropdown", Flag = "Example ImageBox Dropdown", Values = {"Neutral", "Enemy", "Friend"}, Default = "Neutral", Callback = print})
+ImageBox.RightElements:AddButton({Text = "Image Button", Callback = function()
+    Library:Notify({Text = "ImageBox button", Lifetime = 3})
+end})
 
 Window:InitPanels()
-Library:AutoLoad()
 
-Library:Notify({Text = "Havoc Hub successfully loaded!", Lifetime = 5})
+task.wait(Library.TweeningSpeed)
+
+for Name, Value in Library.Themes.Preset do
+    Library:Refresh(Name, Value)
+end
+
+Library:AutoLoad()
