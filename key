@@ -1,0 +1,100 @@
+local uiLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bawfwabva-commits/ui/refs/heads/main/lib"))()
+local Library = uiLib
+
+getgenv().Library = Library
+
+Library.TweeningSpeed = 0.3
+Library.Themes.Preset["Accent"] = Color3.fromRGB(93, 96, 179)
+
+local originalAddTab = Library.AddTab
+
+Library.AddTab = function(self, cfg)
+    if cfg and cfg.Title == "Settings" then
+        local dummyTab = {}
+        setmetatable(dummyTab, {
+            __index = function() 
+                return function() return dummyTab end 
+            end
+        })
+        return dummyTab
+    end
+
+    return originalAddTab(self, cfg)
+end
+
+local KeyWindow = Library:CreateWindow({
+    Prefix = "петя", 
+    Suffix = " | Havoc", 
+    Size = UDim2.new(0, 350, 0, 220), 
+    Position = UDim2.fromScale(0.5, 0.4), 
+    AnchorPoint = Vector2.new(0.5, 0.5)
+})
+
+local AuthTab = KeyWindow:AddTab({Title = "Authorization", Columns = 1})
+local AuthSection = AuthTab:AddSection({Title = "Enter Access Key", Side = 1})
+
+local EnteredKey = ""
+AuthSection:AddInput({
+    Text = "", 
+    Flag = "AuthKeyInput", 
+    PlaceHolder = "Enter your key here...", 
+    FocusLost = false, 
+    ClearTextOnFocus = false, 
+    Callback = function(Value)
+        EnteredKey = Value
+    end
+})
+
+AuthSection:AddButton({
+    Text = "Check Key", 
+    Confirmation = false, 
+    Callback = function()
+        if EnteredKey == "1234" then
+            Library:Notify({Text = "Access Granted! Launching cheat...✅", Lifetime = 3})
+
+            task.spawn(function()
+                local Sound = Instance.new("Sound")
+                Sound.SoundId = "rbxassetid://114672147284831"
+                Sound.Volume = 1
+                Sound.Parent = game:GetService("SoundService")
+                Sound:Play()
+                game:GetService("Debris"):AddItem(Sound, 5)
+            end)
+
+            Library.AddTab = originalAddTab
+
+            task.wait(0.2)
+
+            if getgenv().Library and getgenv().Library.Unload then
+                getgenv().Library:Unload()
+            end
+
+            task.wait(1)
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/bawfwabva-commits/ui/refs/heads/main/main"))()
+        else
+            Library:Notify({Text = "Invalid Key! Please try again.", Lifetime = 3})
+        end
+    end
+})
+
+AuthSection:AddButton({
+    Text = "Discord Link", 
+    Confirmation = false, 
+    Callback = function()
+        Library:Notify({Text = "Discord link copied to your clipboard!", Lifetime = 3})
+        if setclipboard then
+            setclipboard("https://discord.gg/")
+
+            task.spawn(function()
+                local Sound = Instance.new("Sound")
+                Sound.SoundId = "rbxassetid://114672147284831"
+                Sound.Volume = 1
+                Sound.Parent = game:GetService("SoundService")
+                Sound:Play()
+                game:GetService("Debris"):AddItem(Sound, 5)
+            end)
+        end
+    end
+})
+
+KeyWindow:InitPanels()
