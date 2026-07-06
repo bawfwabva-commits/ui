@@ -340,9 +340,9 @@ local Library; do
             return Font.new(getcustomasset(Library.Directory .. "/Fonts/" .. Name .. ".font"))
         end
 
-        Fonts.Main = Fonts:New("tahoma_bold", 700, "Regular", {
-            Id = "tahoma_bold",
-            Url = "https://github.com/i77lhm/storage/raw/refs/heads/main/fonts/tahoma_bold.ttf" -- // Main font
+        Fonts.Main = Fonts:New("ProggyClean", 70, "Regular", {
+            Id = "ProggyClean",
+            Url = "https://github.com/i77lhm/storage/raw/refs/heads/main/fonts/ProggyClean.ttf" -- // Main font
         })
     end
 
