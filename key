@@ -3,9 +3,6 @@ local Library = uiLib
 
 getgenv().Library = Library
 
-Library.TweeningSpeed = 0.3
-Library.Themes.Preset["Accent"] = Color3.fromRGB(93, 96, 179)
-
 local originalAddTab = Library.AddTab
 
 Library.AddTab = function(self, cfg)
