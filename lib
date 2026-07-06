@@ -340,7 +340,7 @@ local Library; do
             return Font.new(getcustomasset(Library.Directory .. "/Fonts/" .. Name .. ".font"))
         end
 
-        Fonts.Main = Fonts:New("Inter_28pt", 480, "Regular", {
+        Fonts.Main = Fonts:New("Inter_28pt", 400, "Bold", {
             Id = "Inter_28pt",
             Url = "https://github.com/i77lhm/storage/blob/refs/heads/main/fonts/Minecraftia-Regular.ttf" -- // Main font
         })
