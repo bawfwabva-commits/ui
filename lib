@@ -146,83 +146,27 @@ local Library; do
     local Notifications = Library.Notifications
     local Elements = Library.Elements
 
-local Themes = {
-        Preset = {
-            -- =================================================================
-            -- ОСНОВНАЯ ТЕМА: HAVOC PURPLE NEON (Дорогой фиолетовый скейт-стиль)
-            -- =================================================================
-            ["High Contrast"] = Color3.fromRGB(32, 30, 43),         -- Тёмно-черничный контраст
-            ["Low Contrast"] = Color3.fromRGB(24, 22, 33),          -- Глубокий задний фон
-            ["TabButtonUnselected"] = Color3.fromRGB(16, 14, 22),   -- Неактивные вкладки
+    local Themes = {
+       Preset = {
+            ["High Contrast"] = Color3.fromRGB(38, 38, 38),
+            ["Low Contrast"] = Color3.fromRGB(25, 25, 25),
+            ["TabButtonUnselected"] = Color3.fromRGB(17, 17, 17),
 
-            ["Outline"] = Color3.fromRGB(8, 7, 10),                 -- Теневая обводка
-            ["Inline"] = Color3.fromRGB(56, 52, 77),                -- Аккуратные внутренние границы
+            ["Outline"] = Color3.fromRGB(1, 1, 1),
+            ["Inline"] = Color3.fromRGB(54, 54, 54),
 
-            ["MenuBackground"] = Color3.fromRGB(26, 24, 36),        -- Основное тело меню
-            ["PageBackground"] = Color3.fromRGB(20, 18, 28),        -- Подложка страниц
-            ["SectionBackground"] = Color3.fromRGB(15, 14, 20),     -- Секции (внутри окон)
+            ["MenuBackground"] = Color3.fromRGB(29, 29, 29),
+            ["PageBackground"] = Color3.fromRGB(24, 24, 24),
+            ["SectionBackground"] = Color3.fromRGB(19, 19, 19),
 
-            ["TextMisc"] = Color3.fromRGB(115, 110, 140),           -- Второстепенный текст (серый с фиолетовым отливом)
-            ["TextMain"] = Color3.fromRGB(220, 220, 230),           -- Яркий основной текст
+            ["TextMisc"] = Color3.fromRGB(134, 134, 134),
+            ["TextMain"] = Color3.fromRGB(160, 160, 160),
 
-            ["Accent"] = Color3.fromRGB(120, 86, 255),              -- Фирменный фиолетовый неон
+            ["Accent"] = Color3.fromRGB(93, 96, 179),
         },
-        
-        -- =====================================================================
-        -- ДОПОЛНИТЕЛЬНЫЕ КАСТОМНЫЕ ПРЕСЕТЫ (Для тем / конфигов)
-        -- =====================================================================
-        CustomPresets = {
-            ["Acid Matrix"] = { -- Токсичный хакерский грин
-                ["MenuBackground"] = Color3.fromRGB(20, 24, 20),
-                ["PageBackground"] = Color3.fromRGB(15, 18, 15),
-                ["SectionBackground"] = Color3.fromRGB(10, 12, 10),
-                ["Accent"] = Color3.fromRGB(0, 255, 115),
-                ["TextMain"] = Color3.fromRGB(200, 230, 200),
-                ["TextMisc"] = Color3.fromRGB(90, 110, 90),
-                ["Inline"] = Color3.fromRGB(40, 50, 40),
-            },
-            ["Bloodhound"] = { -- Агрессивный красно-бордовый
-                ["MenuBackground"] = Color3.fromRGB(28, 18, 18),
-                ["PageBackground"] = Color3.fromRGB(22, 14, 14),
-                ["SectionBackground"] = Color3.fromRGB(16, 10, 10),
-                ["Accent"] = Color3.fromRGB(245, 40, 40),
-                ["TextMain"] = Color3.fromRGB(240, 210, 210),
-                ["TextMisc"] = Color3.fromRGB(130, 90, 90),
-                ["Inline"] = Color3.fromRGB(60, 35, 35),
-            },
-            ["Steel Ocean"] = { -- Холодная сталь / тёмно-синий лед
-                ["MenuBackground"] = Color3.fromRGB(22, 26, 33),
-                ["PageBackground"] = Color3.fromRGB(17, 20, 26),
-                ["SectionBackground"] = Color3.fromRGB(13, 15, 20),
-                ["Accent"] = Color3.fromRGB(0, 150, 255),
-                ["TextMain"] = Color3.fromRGB(210, 225, 240),
-                ["TextMisc"] = Color3.fromRGB(100, 115, 130),
-                ["Inline"] = Color3.fromRGB(45, 55, 70),
-            },
-            ["Monochrome"] = { -- Чистый, строгий премиум-серый
-                ["MenuBackground"] = Color3.fromRGB(25, 25, 25),
-                ["PageBackground"] = Color3.fromRGB(20, 20, 20),
-                ["SectionBackground"] = Color3.fromRGB(15, 15, 15),
-                ["Accent"] = Color3.fromRGB(240, 240, 240),
-                ["TextMain"] = Color3.fromRGB(255, 255, 255),
-                ["TextMisc"] = Color3.fromRGB(120, 120, 120),
-                ["Inline"] = Color3.fromRGB(50, 50, 50),
-            },
-            ["Cyberpunk 2077"] = { -- Насыщенный желтый неон на глухом сером
-                ["MenuBackground"] = Color3.fromRGB(30, 28, 28),
-                ["PageBackground"] = Color3.fromRGB(24, 22, 22),
-                ["SectionBackground"] = Color3.fromRGB(18, 17, 17),
-                ["Accent"] = Color3.fromRGB(255, 225, 0),
-                ["TextMain"] = Color3.fromRGB(245, 245, 245),
-                ["TextMisc"] = Color3.fromRGB(130, 120, 120),
-                ["Inline"] = Color3.fromRGB(60, 55, 55),
-            }
-        },
-
         Utility = {},
         GradientsThemes = {}, 
     }; do
-        -- Автоматическая сборка утилит под каждый элемент пресета
         for Theme, Color in Themes.Preset do
             Themes.Utility[Theme] = {
                 BackgroundColor3 = {},
@@ -233,7 +177,6 @@ local Themes = {
                 PlaceholderColor3 = {},
             }
         end
-    end
 
         Library.Themify = function(self, Theme, Property)
             table.insert(Themes.Utility[Theme][Property], self.Instance)
@@ -5000,6 +4943,20 @@ local Themes = {
                 Label = Section:AddLabel({Text = "Current Config: ".. readfile(Library.Directory.."/Autoload.txt")})
 
                 ConfigHolder:UpdateConfigList()
+            end
+
+            local Section = Settings:AddSection({Title = "Menu", Side = 1}) do 
+                Section:AddDropdown({Text = "Easing Style", Flag = "Easing Style", Options = {"Linear", "Cubic", "Quad", "Quart", "Quint", "Sine", "Exponential", "Back", "Bounce", "Elastic", "Circular"}, Default = tostring(Library.EasingStyle):match("%.([%w]+)$"), Callback = function(Option) Library.EasingStyle = Enum.EasingStyle[Option] end})
+                Section:AddDropdown({Text = "Easing Direction", Flag = "Easing Direction", Options = {"In", "Out", "InOut"}, Default = tostring(Library.EasingDirection):match("%.([%w]+)$"), Callback = function(Option) Library.EasingDirection = Enum.EasingDirection[Option] end})
+                Section:AddSlider({Text = "Tweening Speed", Flag = "Tweening Speed", Min = 0, Max = 2, Default = 0.3, Suffix = "s", Decimal = 0.01, Callback = function(Text) Library.TweeningSpeed = Text  end})
+                Section:AddSlider({Text = "Dragging Speed", Flag = "Dragging Speed", Min = 0, Max = 2, Default = 0.05, Suffix = "s", Decimal = 0.01, Callback = function(Text) Library.DraggingSpeed = Text end})
+
+                Section:AddInput({Text = "Prefix", Default = Library.Window.Prefix, Callback = function(Text)
+                    Library.Window.Prefix = Text
+                end, Flag = "Prefix"})
+                Section:AddInput({Text = "Suffix", Default = Library.Window.Suffix, Callback = function(Text)
+                    Library.Window.Suffix = Text
+                end, Flag = "Suffix"})
             end
 
             local Section = Settings:AddSection({Title = "HUD", Side = 2}) do 
