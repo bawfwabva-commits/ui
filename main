@@ -1,12 +1,11 @@
-local uiLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bawfwabva-commits/ui/refs/heads/main/lib"))()
-local Library = uiLib
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bawfwabva-commits/ui/refs/heads/main/lib"))()
 
 getgenv().Library = Library
 
 local Window = Library:CreateWindow({
-    Prefix = "петя", 
-    Suffix = " .стендик2", 
-    Size = UDim2.new(0, 559, 0, 668), 
+    Prefix = "Akatsuki.", 
+    Suffix = "havoc", 
+    Size = UDim2.new(0, 570, 0, 700), 
     Position = UDim2.fromScale(0.5, 0.3), 
     AnchorPoint = Vector2.new(0.5, 0.3)
 })
