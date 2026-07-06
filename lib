@@ -159,8 +159,8 @@ local Library; do
             ["PageBackground"] = Color3.fromRGB(24, 24, 24),
             ["SectionBackground"] = Color3.fromRGB(19, 19, 19),
 
-            ["TextMisc"] = Color3.fromRGB(134, 134, 134),
-            ["TextMain"] = Color3.fromRGB(160, 160, 160),
+            ["TextMisc"] = Color3.fromRGB(150, 150, 150),
+            ["TextMain"] = Color3.fromRGB(200, 200, 200),
 
             ["Accent"] = Color3.fromRGB(93, 96, 179),
         },
