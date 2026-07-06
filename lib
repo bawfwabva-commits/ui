@@ -2847,8 +2847,8 @@ local Library; do
             Data = Data or {}
 
             local Cfg = {
-                Prefix = Data.Prefix
-                Suffix = Data.Suffix
+                Prefix = Data.Prefix,
+                Suffix = Data.Suffix,
 
                 Size = Data.Size or UDim2.new(0, 506, 0, 661),
 
