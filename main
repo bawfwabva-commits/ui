@@ -4,8 +4,8 @@ getgenv().Library = Library
 local Window = Library:CreateWindow({
     Prefix = "Akatsuki.", 
     Suffix = "havoc", 
-    Size = UDim2.new(0, 500, 0, 700), 
-    Position = UDim2.fromScale(0.5, 0.2), 
+    Size = UDim2.new(0, 559, 0, 668)
+    Position = UDim2.fromScale(0.5, 0.1), 
     AnchorPoint = Vector2.new(0.5, 0.3)
 })
 
