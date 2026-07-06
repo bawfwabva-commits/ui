@@ -342,7 +342,7 @@ local Library; do
 
         Fonts.Main = Fonts:New("Inter_28pt", 400, "Regular", {
             Id = "Inter_28pt",
-            Url = "https://github.com/i77lhm/storage/blob/refs/heads/main/fonts/Inter_28pt-SemiBold.ttf" -- // Main font
+            Url = "https://github.com/i77lhm/storage/blob/refs/heads/main/fonts/tahoma_bold.ttf" -- // Main font
         })
     end
 
