@@ -1,84 +1,21 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bawfwabva-commits/ui/refs/heads/main/lib"))()
-
 getgenv().Library = Library
 
 local Window = Library:CreateWindow({
     Prefix = "Akatsuki.", 
     Suffix = "havoc", 
     Size = UDim2.new(0, 500, 0, 700), 
-    Position = UDim2.fromScale(0.5, 0.3), 
+    Position = UDim2.fromScale(0.5, 0.2), 
     AnchorPoint = Vector2.new(0.5, 0.3)
 })
 
-local Combat = Window:AddTab({Title = "Combat", Columns = 2})
-local Visuals = Window:AddTab({Title = "Visuals", Columns = 2})
-
-local MainSection = Combat:AddSection({Title = "Main Controls", Side = 1})
-
-MainSection:AddToggle({Text = "Aimbot", Flag = "AimbotToggle", Default = false, Callback = function(state)
-    print("Aimbot:", state)
-end})
-
-MainSection:AddSlider({Text = "FOV", Flag = "AimbotFOV", Min = 0, Max = 180, Rounding = 1, Default = 90, Suffix = "°", Callback = function(val)
-    print("FOV changed to:", val)
-end})
-
-MainSection:AddToggle({Text = "Silent Aim", Flag = "SilentAimToggle", Default = false, Callback = function(state)
-    print("Silent Aim:", state)
-end})
-
-MainSection:AddKeyPicker({Text = "Toggle Keybind", Flag = "Example Toggle Keybind", Key = Enum.KeyCode.Q, Mode = "Toggle", Active = false, ShowInList = true, Callback = function(state)
-    print("Silent Aim:", state)
-end})
-
-MainSection:AddKeyPicker({Text = "Hold Keybind", Flag = "Example Hold Keybind", Key = Enum.KeyCode.LeftAlt, Mode = "Hold", Active = false, ShowInList = true, Callback = function(state)
-    print("Silent Aim:", state)
-end})
-
-MainSection:AddKeyPicker({Text = "Always Keybind", Flag = "Example Always Keybind", Key = Enum.KeyCode.LeftShift, Mode = "Always", Active = true, ShowInList = true, Callback = function(state)
-    print("Silent Aim:", state)
-end})
-
-local TriggerSection = Combat:AddSection({Title = "Triggerbot", Side = 2})
-
-TriggerSection:AddToggle({Text = "Triggerbot", Flag = "TriggerToggle", Default = false, Callback = function(state)
-    print("Triggerbot:", state)
-end})
-
-TriggerSection:AddSlider({Text = "Delay", Flag = "TriggerDelay", Min = 0, Max = 500, Rounding = 5, Default = 50, Suffix = "ms", Callback = function(val)
-    print("Trigger Delay:", val)
-end})
-
-local VisualFeatureSection = Visuals:AddSection({Title = "ESP Features", Side = 1})
-
-local BoxToggle = VisualFeatureSection:AddToggle({Text = "Box ESP", Flag = "BoxEsp", Default = false, Callback = function(state)
-    print("Box ESP:", state)
-end})
-
-BoxToggle:AddColorPicker({Text = "Box Color", Flag = "BoxColor", Default = Color3.fromRGB(255, 255, 255), Alpha = 0.5, Callback = function(color)
-    print("Box Color changed:", color)
-end})
-
-VisualFeatureSection:AddToggle({Text = "Names", Flag = "EspNames", Default = false, Callback = function(state)
-    print("ESP Names:", state)
-end})
-
-VisualFeatureSection:AddToggle({Text = "Tracer Lines", Flag = "EspTracers", Default = false, Callback = function(state)
-    print("ESP Tracers:", state)
-end})
+local Combat = Window:AddTab({Title = "Combat", Columns = 1})
+local Visuals = Window:AddTab({Title = "Visuals", Columns = 1})
+local Movement = Window:AddTab({Title = "Movement", Columns = 1})
+local Misc = Window:AddTab({Title = "Misc", Columns = 1})
+local Utility = Window:AddTab({Title = "Utility", Columns = 1})
 
 Window:InitPanels()
-
-pcall(function()
-    if Window.Tabs and Window.Tabs["Settings"] then
-        for _, section in ipairs(Window.Tabs["Settings"].Sections or {}) do
-            if section.Title == "Menu" and section.Instance then
-                section.Instance:Destroy()
-            end
-        end
-    end
-end)
-
 Library:AutoLoad()
 
-Library:Notify({Text = "Nigger skidded havoc hub successfully loaded!", Lifetime = 5})
+Library:Notify({Text = "Havoc Hub successfully loaded!", Lifetime = 5})
