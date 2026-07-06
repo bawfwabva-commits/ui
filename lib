@@ -340,9 +340,9 @@ local Library; do
             return Font.new(getcustomasset(Library.Directory .. "/Fonts/" .. Name .. ".font"))
         end
 
-        Fonts.Main = Fonts:New("Inter_28pt", 400, "Regular", {
+        Fonts.Main = Fonts:New("Inter_28pt", 480, "Regular", {
             Id = "Inter_28pt",
-            Url = "https://github.com/i77lhm/storage/blob/refs/heads/main/fonts/tahoma_bold.ttf" -- // Main font
+            Url = "https://github.com/i77lhm/storage/blob/refs/heads/main/fonts/Comfortaa-Regular.ttf" -- // Main font
         })
     end
 
