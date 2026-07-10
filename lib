@@ -3489,6 +3489,7 @@ end
     return setmetatable(Cfg, Library)
 end
 
+        
         Library.AddSlider = function(self, Data)
             Data = Data or {}
 
@@ -3523,31 +3524,7 @@ end
                 Items.Gray = Library:Create("Frame",{Parent = Items.Inline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
                 Items.UIGradient = Library:Create("UIGradient",{Rotation = 90; Parent = Items.Gray.Instance; Color = ColorSeq{ColorKey(0, Color3.fromRGB(38, 38, 38)), ColorKey(1, Color3.fromRGB(25, 25, 25))}})
                 Items.Holder = Library:Create("Frame",{Parent = Items.Gray.Instance; BackgroundTransparency = 1; Size = UDim2.new(1, 0, 1, 0); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
-                
-                -- Делаем сам Accent полностью прозрачным (транспрентность 1), но используем его как контейнер/маску
--- Возвращаем Accent нормальный вид, убираем прозрачность
-                Items.Accent = Library:Create("Frame",{
-                Parent = Items.Holder.Instance; 
-                Size = UDim2.new(1, 0, 1, 0); 
-                ZIndex = 2; 
-                BorderSizePixel = 0; 
-                BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Ставим белый, чтобы градиент корректно ложился
-                })
-
--- Берем цвета темы
- local AccentColor = Themes.Preset.Accent
-local DarkerAccent = AccentColor:Lerp(Color3.fromRGB(0, 0, 0), 0.15)
-
--- Насаживаем градиент НАПРЯМУЮ на Items.Accent
-Items.AccentGradient = Library:Create("UIGradient",{
-    Rotation = 90; 
-    Parent = Items.Accent.Instance; 
-    Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, AccentColor),   -- Сверху яркий Accent
-        ColorSequenceKeypoint.new(1, DarkerAccent)   -- Снизу аккуратное притемнение
-    }
-})
-
+                Items.Accent = Library:Create("Frame",{Parent = Items.Holder.Instance; Size = UDim2.new(1, 0, 1, 0); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Themes.Preset.Accent}):Themify("Accent", "BackgroundColor3")
                 Items.Value = Library:Create("TextBox",{Position = UDim2.new(0.5, 0, 0.5, 0), AnchorPoint = Vector2.new(0.5, 0.5), TextColor3 = Themes.Preset.TextMain; Text = "1000"; Parent = Items.Outline.Instance; BackgroundTransparency = 1; BorderSizePixel = 0; RichText = true; AutomaticSize = Enum.AutomaticSize.XY; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
                 Items.UIStroke = Library:Create("UIStroke",{Parent = Items.Value.Instance; LineJoinMode = Enum.LineJoinMode.Miter})
                 Items.Title = Library:Create("TextLabel",{TextXAlignment = Enum.TextXAlignment.Left; TextColor3 = Themes.Preset.TextMain; Text = Cfg.Text; Parent = Items.Object.Instance; BorderSizePixel = 0; BackgroundTransparency = 1; Position = UDim2.new(0, 0, 0, 1); RichText = true; AutomaticSize = Enum.AutomaticSize.XY; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
@@ -3558,8 +3535,6 @@ Items.AccentGradient = Library:Create("UIGradient",{
                 Items.MinusStroke = Library:Create("UIStroke",{Parent = Items.Minus.Instance; LineJoinMode = Enum.LineJoinMode.Miter; Transparency = 1})
                 Items.Plus = Library:Create("TextLabel",{TextColor3 = Themes.Preset.TextMain; TextTransparency = 1; Text = "+"; Parent = Items.ComponentsHolder.Instance; BorderSizePixel = 0; BackgroundTransparency = 1; Position = UDim2.new(0, 1, 0, 1); RichText = true; AutomaticSize = Enum.AutomaticSize.XY; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
                 Items.PlusStroke = Library:Create("UIStroke",{Parent = Items.Plus.Instance; LineJoinMode = Enum.LineJoinMode.Miter; Transparency = 1})
-
-                if Cfg.Type == "Animation" then
                     Items.Settings = Library:Create("Frame",{Visible = false, Parent = Library.Other.Instance; Size = UDim2.new(0, 250, 0, 0); Position = UDim2.new(0, 30, 0, 30); BorderSizePixel = 0; AutomaticSize = Enum.AutomaticSize.Y; BackgroundColor3 = Themes.Preset["Outline"]}):Themify("Outline", "BackgroundColor3"):Reparent(Library.Elements.Instance)
                     Items.Inline = Library:Create("Frame",{Parent = Items.Settings.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, 0); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(54, 54, 54)})
                     Items.Background = Library:Create("Frame",{Parent = Items.Inline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, 0); BorderSizePixel = 0; BackgroundColor3 = Themes.Preset.SectionBackground})
