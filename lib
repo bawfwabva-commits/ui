@@ -689,7 +689,7 @@ local Library; do
         -- Вытаскиваем точный цвет акцента
         local AccentColor = Themes.Preset.Accent
         -- Делаем низ лишь слегка темнее (на 15%)
-        local DarkerAccent = AccentColor:Lerp(Color3.fromRGB(0, 0, 0), 0.15)
+        local DarkerAccent = AccentColor:Lerp(Color3.fromRGB(0, 0, 0), 1)
 
         -- Чистый градиент
         Items.AccentGradient = Library:Create("UIGradient",{
