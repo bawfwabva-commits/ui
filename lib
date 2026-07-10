@@ -148,21 +148,21 @@ local Library; do
 
     local Themes = {
        Preset = {
-            ["High Contrast"] = Color3.fromRGB(38, 38, 38),
-            ["Low Contrast"] = Color3.fromRGB(25, 25, 25),
-            ["TabButtonUnselected"] = Color3.fromRGB(17, 17, 17),
+            ["High Contrast"] = Color3.fromRGB(3, 3, 3),
+            ["Low Contrast"] = Color3.fromRGB(0, 0, 0),
+            ["TabButtonUnselected"] = Color3.fromRGB(0, 0, 0),
 
             ["Outline"] = Color3.fromRGB(1, 1, 1),
-            ["Inline"] = Color3.fromRGB(54, 54, 54),
+            ["Inline"] = Color3.fromRGB(28, 28, 29),
 
-            ["MenuBackground"] = Color3.fromRGB(29, 29, 29),
-            ["PageBackground"] = Color3.fromRGB(24, 24, 24),
-            ["SectionBackground"] = Color3.fromRGB(19, 19, 19),
+            ["MenuBackground"] = Color3.fromRGB(0, 0, 0),
+            ["PageBackground"] = Color3.fromRGB(1, 1, 1),
+            ["SectionBackground"] = Color3.fromRGB(0, 0, 0),
 
-            ["TextMisc"] = Color3.fromRGB(150, 150, 150),
-            ["TextMain"] = Color3.fromRGB(200, 200, 200),
+            ["TextMisc"] = Color3.fromRGB(134, 134, 134),
+            ["TextMain"] = Color3.fromRGB(160, 160, 160),
 
-            ["Accent"] = Color3.fromRGB(255, 164, 75),
+            ["Accent"] = Color3.fromRGB(140, 136, 197),
         },
         Utility = {},
         GradientsThemes = {}, 
@@ -340,7 +340,7 @@ local Library; do
             return Font.new(getcustomasset(Library.Directory .. "/Fonts/" .. Name .. ".font"))
         end
 
-        Fonts.Main = Fonts:New("ProggyClean", 4000, "Regular", {
+        Fonts.Main = Fonts:New("ProggyClean", 400, "Regular", {
             Id = "ProggyClean",
             Url = "https://github.com/i77lhm/storage/raw/refs/heads/main/fonts/ProggyClean.ttf" -- // Main font
         })
@@ -668,7 +668,71 @@ local Library; do
                     Parent = Items.Elements.Instance;
                     Padding = UDim.new(0, 4);
                     SortOrder = Enum.SortOrder.LayoutOrder
-                })
+                })Library.AddToggle = function(self, Data)
+    Data = Data or {}
+
+    local Cfg = {
+        Text = Data.Text or "Toggle",
+
+        Flag = Data.Flag or Data.Text or Library:NextFlag(),
+        Enabled = Data.Default or false,
+        Callback = Data.Callback or function() end,
+
+        Items = {},
+
+        Names = self.Names,
+
+        Elements = self.Elements,
+        DataElements = self.DataElements,
+        SeperatedElements = self.SeperatedElements,
+    }
+
+    local Items = Cfg.Items; do
+        Items.Object = Library:Create("TextButton",{Parent = self.Items.Elements.Instance; BackgroundTransparency = 1; Size = UDim2.new(1, 0, 0, 14); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
+        Items.Outline = Library:Create("Frame",{Parent = Items.Object.Instance; Size = UDim2.new(0, 14, 0, 14); BorderSizePixel = 0; BackgroundColor3 = Themes.Preset["Outline"]}):Themify("Outline", "BackgroundColor3")
+        Items.Inline = Library:Create("Frame",{Parent = Items.Outline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(54, 54, 54)})
+        
+        -- The primary solid box indicator
+        Items.Accent = Library:Create("Frame",{Parent = Items.Inline.Instance; BackgroundTransparency = 1; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Themes.Preset.Accent}):Themify("Accent", "BackgroundColor3")
+        
+        -- Glow is now parented to the main solid indicator box (Items.Accent)
+        Items.Shadow = Library:Create("UIShadow", {
+            Parent = Items.Accent.Instance,
+            BlurRadius = UDim.new(0, 4),             -- Soft tight glow
+            Color = Themes.Preset.Accent,          
+            Offset = UDim2.new(0, 0, 0, 0),        
+            Spread = UDim2.new(0, 0, 0, 0),          
+            Transparency = Cfg.Enabled and 0.4 or 1, -- Matches the active state transparency
+            ZIndex = 1                               -- Keeps it bound relative to the active block layer
+        }):Themify("Accent", "Color")
+
+        Items.Gray = Library:Create("Frame",{Parent = Items.Inline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
+        Items.UIGradient = Library:Create("UIGradient",{Rotation = 90; Parent = Items.Gray.Instance; Color = ColorSeq{ColorKey(0, Color3.fromRGB(38, 38, 38)), ColorKey(1, Color3.fromRGB(25, 25, 25))}})
+        Items.TextLabel = Library:Create("TextLabel",{TextColor3 = Themes.Preset.TextMain; Text = Cfg.Text; Parent = Items.Object.Instance; BorderSizePixel = 0; BackgroundTransparency = 1; Position = UDim2.new(0, 18, 0, 1); RichText = true; AutomaticSize = Enum.AutomaticSize.XY; TextXAlignment = Enum.TextXAlignment.Left; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
+        Items.UIStroke = Library:Create("UIStroke",{Parent = Items.TextLabel.Instance; LineJoinMode = Enum.LineJoinMode.Miter})
+        Items.ComponentsHolder = Library:Create("Frame",{Parent = Items.Object.Instance; Position = UDim2.new(1, 0, 0, 0); Size = UDim2.new(0, 0, 0, 14); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
+        Items.UIListLayout = Library:Create("UIListLayout",{VerticalAlignment = Enum.VerticalAlignment.Center; FillDirection = Enum.FillDirection.Horizontal; HorizontalAlignment = Enum.HorizontalAlignment.Right; Parent = Items.ComponentsHolder.Instance; Padding = UDim.new(0, 4); SortOrder = Enum.SortOrder.LayoutOrder})
+    end
+
+    Cfg.Set = function(Bool)
+        -- Both the solid background frame and its shadow source update together
+        Items.Accent:Tween({ BackgroundTransparency = Bool and 0 or 1 })
+        Items.Shadow:Tween({ Transparency = Bool and 0.4 or 1 })
+
+        Flags[Cfg.Flag] = Bool
+        Cfg.Callback(Bool)
+    end
+
+    Items.Object:OnClick(function()
+        Cfg.Enabled = not Cfg.Enabled
+        Cfg.Set(Cfg.Enabled)
+    end)
+
+    local Toggle = setmetatable(Cfg, Library)
+    Toggle:SetupElement(Cfg.Enabled)
+
+    return setmetatable(Cfg, Library)
+end
 
                 Library:Create( "UIPadding", {
                     PaddingBottom = UDim.new(0, 2);
@@ -1789,9 +1853,9 @@ local Library; do
                 YOffset = 0
                 BiggestX = 0
 
-                if not self.Window.KeybindListVisible then 
-                    return 
-                end 
+if not self.Window or not self.Window.KeybindListVisible then
+    return
+end
 
                 local Tick = tick()
                 for _,Object in self.Keybinds do
@@ -2847,8 +2911,8 @@ local Library; do
             Data = Data or {}
 
             local Cfg = {
-                Prefix = Data.Prefix,
-                Suffix = Data.Suffix,
+                Prefix = Data.Prefix or "Verya", 
+                Suffix = Data.Suffix or ".gg",
 
                 Size = Data.Size or UDim2.new(0, 506, 0, 661),
 
@@ -2890,7 +2954,7 @@ local Library; do
                 Items.Inline = Library:Create("Frame",{Parent = Items.KeybindList.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, 0); BorderSizePixel = 0; BackgroundColor3 = Themes.Preset["Inline"]}):Themify("Inline", "BackgroundColor3")
                 Items.Background = Library:Create("Frame",{Parent = Items.Inline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, 0); BorderSizePixel = 0; BackgroundColor3 = Themes.Preset["SectionBackground"]}):Themify("SectionBackground", "BackgroundColor3")
                 Items.Topbar = Library:Create("Frame",{Parent = Items.Background.Instance; Size = UDim2.new(1, 0, 0, 21); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
-                Items.KeybindListTitle = Library:Create("TextLabel",{TextColor3 = Themes.Preset["Accent"]; Text = 'hotkeys'; Parent = Items.Topbar.Instance; BorderSizePixel = 0; BackgroundTransparency = 1; Position = UDim2.new(0, 4, 0, 4); RichText = true; AutomaticSize = Enum.AutomaticSize.XY; BackgroundColor3 = Color3.fromRGB(255, 255, 255)}):Themify("Accent", "TextColor3")
+                Items.KeybindListTitle = Library:Create("TextLabel",{TextColor3 = Themes.Preset["Accent"]; Text = 'key<font color = "rgb(255, 255, 255)">binds</font>'; Parent = Items.Topbar.Instance; BorderSizePixel = 0; BackgroundTransparency = 1; Position = UDim2.new(0, 4, 0, 4); RichText = true; AutomaticSize = Enum.AutomaticSize.XY; BackgroundColor3 = Color3.fromRGB(255, 255, 255)}):Themify("Accent", "TextColor3")
                 Items.UIStroke = Library:Create("UIStroke",{Parent = Items.KeybindListTitle.Instance; LineJoinMode = Enum.LineJoinMode.Miter})
                 Items.Holder = Library:Create("Frame",{Parent = Items.Topbar.Instance; Position = UDim2.new(0, 1, 1, -1); Size = UDim2.new(1, -2, 0, 1); BorderSizePixel = 0; BackgroundColor3 = Themes.Preset["Inline"]}):Themify("Inline", "BackgroundColor3")
                 Items.UIGradient = Library:Create("UIGradient",{Parent = Items.Holder.Instance; Transparency = NumSeq{NumKey(0, 0), NumKey(0.25, 0.75), NumKey(0.5, 1), NumKey(0.75, 0.75), NumKey(1, 0)}})
@@ -3379,54 +3443,70 @@ local Library; do
 
         -- // Elements
         Library.AddToggle = function(self, Data)
-            Data = Data or {}
+    Data = Data or {}
 
-            local Cfg = {
-                Text = Data.Text or "Toggle",
+    local Cfg = {
+        Text = Data.Text or "Toggle",
 
-                Flag = Data.Flag or Data.Text or Library:NextFlag(),
-                Enabled = Data.Default or false,
-                Callback = Data.Callback or function() end,
+        Flag = Data.Flag or Data.Text or Library:NextFlag(),
+        Enabled = Data.Default or false,
+        Callback = Data.Callback or function() end,
 
-                Items = {},
+        Items = {},
 
-                Names = self.Names,
+        Names = self.Names,
 
-                Elements = self.Elements,
-                DataElements = self.DataElements,
-                SeperatedElements = self.SeperatedElements,
-            }
+        Elements = self.Elements,
+        DataElements = self.DataElements,
+        SeperatedElements = self.SeperatedElements,
+    }
 
-            local Items = Cfg.Items; do
-                Items.Object = Library:Create("TextButton",{Parent = self.Items.Elements.Instance; BackgroundTransparency = 1; Size = UDim2.new(1, 0, 0, 14); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
-                Items.Outline = Library:Create("Frame",{Parent = Items.Object.Instance; Size = UDim2.new(0, 14, 0, 14); BorderSizePixel = 0; BackgroundColor3 = Themes.Preset["Outline"]}):Themify("Outline", "BackgroundColor3")
-                Items.Inline = Library:Create("Frame",{Parent = Items.Outline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(54, 54, 54)})
-                Items.Accent = Library:Create("Frame",{Parent = Items.Inline.Instance; BackgroundTransparency = 1; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Themes.Preset.Accent}):Themify("Accent", "BackgroundColor3")
-                Items.Gray = Library:Create("Frame",{Parent = Items.Inline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
-                Items.UIGradient = Library:Create("UIGradient",{Rotation = 90; Parent = Items.Gray.Instance; Color = ColorSeq{ColorKey(0, Color3.fromRGB(38, 38, 38)), ColorKey(1, Color3.fromRGB(25, 25, 25))}})
-                Items.TextLabel = Library:Create("TextLabel",{TextColor3 = Themes.Preset.TextMain; Text = Cfg.Text; Parent = Items.Object.Instance; BorderSizePixel = 0; BackgroundTransparency = 1; Position = UDim2.new(0, 18, 0, 1); RichText = true; AutomaticSize = Enum.AutomaticSize.XY; TextXAlignment = Enum.TextXAlignment.Left; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
-                Items.UIStroke = Library:Create("UIStroke",{Parent = Items.TextLabel.Instance; LineJoinMode = Enum.LineJoinMode.Miter})
-                Items.ComponentsHolder = Library:Create("Frame",{Parent = Items.Object.Instance; Position = UDim2.new(1, 0, 0, 0); Size = UDim2.new(0, 0, 0, 14); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
-                Items.UIListLayout = Library:Create("UIListLayout",{VerticalAlignment = Enum.VerticalAlignment.Center; FillDirection = Enum.FillDirection.Horizontal; HorizontalAlignment = Enum.HorizontalAlignment.Right; Parent = Items.ComponentsHolder.Instance; Padding = UDim.new(0, 4); SortOrder = Enum.SortOrder.LayoutOrder})
-            end
+    local Items = Cfg.Items; do
+        Items.Object = Library:Create("TextButton",{Parent = self.Items.Elements.Instance; BackgroundTransparency = 1; Size = UDim2.new(1, 0, 0, 14); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
+        Items.Outline = Library:Create("Frame",{Parent = Items.Object.Instance; Size = UDim2.new(0, 14, 0, 14); BorderSizePixel = 0; BackgroundColor3 = Themes.Preset["Outline"]}):Themify("Outline", "BackgroundColor3")
+        Items.Inline = Library:Create("Frame",{Parent = Items.Outline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(54, 54, 54)})
+        
+        -- The primary solid box indicator
+        Items.Accent = Library:Create("Frame",{Parent = Items.Inline.Instance; BackgroundTransparency = 1; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Themes.Preset.Accent}):Themify("Accent", "BackgroundColor3")
+        
+        -- Glow is now parented to the main solid indicator box (Items.Accent)
+        Items.Shadow = Library:Create("UIShadow", {
+            Parent = Items.Accent.Instance,
+            BlurRadius = UDim.new(0, 4),             -- Soft tight glow
+            Color = Themes.Preset.Accent,          
+            Offset = UDim2.new(0, 0, 0, 0),        
+            Spread = UDim2.new(0, 0, 0, 0),          
+            Transparency = Cfg.Enabled and 0.4 or 1, -- Matches the active state transparency
+            ZIndex = 1                               -- Keeps it bound relative to the active block layer
+        }):Themify("Accent", "Color")
 
-            Cfg.Set = function(Bool)
-                Items.Accent:Tween({ BackgroundTransparency = Bool and 0 or 1 })
+        Items.Gray = Library:Create("Frame",{Parent = Items.Inline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
+        Items.UIGradient = Library:Create("UIGradient",{Rotation = 90; Parent = Items.Gray.Instance; Color = ColorSeq{ColorKey(0, Color3.fromRGB(38, 38, 38)), ColorKey(1, Color3.fromRGB(25, 25, 25))}})
+        Items.TextLabel = Library:Create("TextLabel",{TextColor3 = Themes.Preset.TextMain; Text = Cfg.Text; Parent = Items.Object.Instance; BorderSizePixel = 0; BackgroundTransparency = 1; Position = UDim2.new(0, 18, 0, 1); RichText = true; AutomaticSize = Enum.AutomaticSize.XY; TextXAlignment = Enum.TextXAlignment.Left; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
+        Items.UIStroke = Library:Create("UIStroke",{Parent = Items.TextLabel.Instance; LineJoinMode = Enum.LineJoinMode.Miter})
+        Items.ComponentsHolder = Library:Create("Frame",{Parent = Items.Object.Instance; Position = UDim2.new(1, 0, 0, 0); Size = UDim2.new(0, 0, 0, 14); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
+        Items.UIListLayout = Library:Create("UIListLayout",{VerticalAlignment = Enum.VerticalAlignment.Center; FillDirection = Enum.FillDirection.Horizontal; HorizontalAlignment = Enum.HorizontalAlignment.Right; Parent = Items.ComponentsHolder.Instance; Padding = UDim.new(0, 4); SortOrder = Enum.SortOrder.LayoutOrder})
+    end
 
-                Flags[Cfg.Flag] = Bool
-                Cfg.Callback(Bool)
-            end
+    Cfg.Set = function(Bool)
+        -- Both the solid background frame and its shadow source update together
+        Items.Accent:Tween({ BackgroundTransparency = Bool and 0 or 1 })
+        Items.Shadow:Tween({ Transparency = Bool and 0.4 or 1 })
 
-            Items.Object:OnClick(function()
-                Cfg.Enabled = not Cfg.Enabled
-                Cfg.Set(Cfg.Enabled)
-            end)
+        Flags[Cfg.Flag] = Bool
+        Cfg.Callback(Bool)
+    end
 
-            local Toggle = setmetatable(Cfg, Library)
-            Toggle:SetupElement(Cfg.Enabled)
+    Items.Object:OnClick(function()
+        Cfg.Enabled = not Cfg.Enabled
+        Cfg.Set(Cfg.Enabled)
+    end)
 
-            return setmetatable(Cfg, Library)
-        end
+    local Toggle = setmetatable(Cfg, Library)
+    Toggle:SetupElement(Cfg.Enabled)
+
+    return setmetatable(Cfg, Library)
+end
 
         Library.AddSlider = function(self, Data)
             Data = Data or {}
@@ -4947,7 +5027,7 @@ local Library; do
 
             local Section = Settings:AddSection({Title = "HUD", Side = 2}) do 
             Section:AddToggle({Text = "Watermark", Default = true, Callback = self.SetWatermarkVisibility})
-            Section:AddDropdown({Text = "Options", Flag = "WatermarkSettings", Options = {"Title", "Fps", "Ping", "Game Name", "User ID", "LocalPlayer Name", "Date"}, Multi = true, Default = {"Title", "Fps", "Ping", "Date"}})
+            Section:AddDropdown({Text = "Options", Flag = "WatermarkSettings", Options = {"Title", "Fps", "Ping", "Game Name", "User ID", "LocalPlayer Name", "Date"}, Multi = true, Default = {"Title", "Fps", "Ping"}})
             Section:AddSlider({Text = "Refresh Rate", Flag = "Refresh Rate", Min = 0, Max = 2, Default = 0.1, Suffix = "s", Decimal = 0.01})
             Section:AddToggle({Text = "Keybind List", Default = true, Callback = self.SetKeybindListVisibility}) 
                 
