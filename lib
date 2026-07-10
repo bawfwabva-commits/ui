@@ -162,7 +162,7 @@ local Library; do
             ["TextMisc"] = Color3.fromRGB(134, 134, 134),
             ["TextMain"] = Color3.fromRGB(160, 160, 160),
 
-            ["Accent"] = Color3.fromRGB(245, 20, 136),
+            ["Accent"] = Color3.fromRGB(145, 141, 205),
         },
         Utility = {},
         GradientsThemes = {}, 
@@ -695,15 +695,7 @@ local Library; do
         -- The primary solid box indicator
         Items.Accent = Library:Create("Frame",{Parent = Items.Inline.Instance; BackgroundTransparency = 1; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Themes.Preset.Accent}):Themify("Accent", "BackgroundColor3")
         
-        -- Glow is now parented to the main solid indicator box (Items.Accent)
-        Items.Shadow = Library:Create("UIShadow", {
-            Parent = Items.Accent.Instance,
-            BlurRadius = UDim.new(0, 4),             -- Soft tight glow
-            Color = Themes.Preset.Accent,          
-            Offset = UDim2.new(0, 0, 0, 0),        
-            Spread = UDim2.new(0, 0, 0, 0),          
-            Transparency = Cfg.Enabled and 0.4 or 1, -- Matches the active state transparency
-            ZIndex = 1                               -- Keeps it bound relative to the active block layer
+
         }):Themify("Accent", "Color")
 
         Items.Gray = Library:Create("Frame",{Parent = Items.Inline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
@@ -715,10 +707,7 @@ local Library; do
     end
 
     Cfg.Set = function(Bool)
-        -- Both the solid background frame and its shadow source update together
         Items.Accent:Tween({ BackgroundTransparency = Bool and 0 or 1 })
-        Items.Shadow:Tween({ Transparency = Bool and 0.4 or 1 })
-
         Flags[Cfg.Flag] = Bool
         Cfg.Callback(Bool)
     end
@@ -3468,17 +3457,7 @@ end
         
         -- The primary solid box indicator
         Items.Accent = Library:Create("Frame",{Parent = Items.Inline.Instance; BackgroundTransparency = 1; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Themes.Preset.Accent}):Themify("Accent", "BackgroundColor3")
-        
-        -- Glow is now parented to the main solid indicator box (Items.Accent)
-        Items.Shadow = Library:Create("UIShadow", {
-            Parent = Items.Accent.Instance,
-            BlurRadius = UDim.new(0, 4),             -- Soft tight glow
-            Color = Themes.Preset.Accent,          
-            Offset = UDim2.new(0, 0, 0, 0),        
-            Spread = UDim2.new(0, 0, 0, 0),          
-            Transparency = Cfg.Enabled and 0.4 or 1, -- Matches the active state transparency
-            ZIndex = 1                               -- Keeps it bound relative to the active block layer
-        }):Themify("Accent", "Color")
+
 
         Items.Gray = Library:Create("Frame",{Parent = Items.Inline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
         Items.UIGradient = Library:Create("UIGradient",{Rotation = 90; Parent = Items.Gray.Instance; Color = ColorSeq{ColorKey(0, Color3.fromRGB(38, 38, 38)), ColorKey(1, Color3.fromRGB(25, 25, 25))}})
@@ -3489,9 +3468,7 @@ end
     end
 
     Cfg.Set = function(Bool)
-        -- Both the solid background frame and its shadow source update together
         Items.Accent:Tween({ BackgroundTransparency = Bool and 0 or 1 })
-        Items.Shadow:Tween({ Transparency = Bool and 0.4 or 1 })
 
         Flags[Cfg.Flag] = Bool
         Cfg.Callback(Bool)
@@ -5023,20 +5000,6 @@ end
                 Label = Section:AddLabel({Text = "Current Config: ".. readfile(Library.Directory.."/Autoload.txt")})
 
                 ConfigHolder:UpdateConfigList()
-            end
-
-            local Section = Settings:AddSection({Title = "Menu", Side = 1}) do 
-                Section:AddDropdown({Text = "Easing Style", Flag = "Easing Style", Options = {"Linear", "Cubic", "Quad", "Quart", "Quint", "Sine", "Exponential", "Back", "Bounce", "Elastic", "Circular"}, Default = tostring(Library.EasingStyle):match("%.([%w]+)$"), Callback = function(Option) Library.EasingStyle = Enum.EasingStyle[Option] end})
-                Section:AddDropdown({Text = "Easing Direction", Flag = "Easing Direction", Options = {"In", "Out", "InOut"}, Default = tostring(Library.EasingDirection):match("%.([%w]+)$"), Callback = function(Option) Library.EasingDirection = Enum.EasingDirection[Option] end})
-                Section:AddSlider({Text = "Tweening Speed", Flag = "Tweening Speed", Min = 0, Max = 2, Default = 0.3, Suffix = "s", Decimal = 0.01, Callback = function(Text) Library.TweeningSpeed = Text  end})
-                Section:AddSlider({Text = "Dragging Speed", Flag = "Dragging Speed", Min = 0, Max = 2, Default = 0.05, Suffix = "s", Decimal = 0.01, Callback = function(Text) Library.DraggingSpeed = Text end})
-
-                Section:AddInput({Text = "Prefix", Default = Library.Window.Prefix, Callback = function(Text)
-                    Library.Window.Prefix = Text
-                end, Flag = "Prefix"})
-                Section:AddInput({Text = "Suffix", Default = Library.Window.Suffix, Callback = function(Text)
-                    Library.Window.Suffix = Text
-                end, Flag = "Suffix"})
             end
 
             local Section = Settings:AddSection({Title = "HUD", Side = 2}) do 
