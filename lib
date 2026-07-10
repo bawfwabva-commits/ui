@@ -681,7 +681,7 @@ local Library; do
         Items.Outline = Library:Create("Frame",{Parent = Items.Object.Instance; Size = UDim2.new(0, 14, 0, 14); BorderSizePixel = 0; BackgroundColor3 = Themes.Preset["Outline"]}):Themify("Outline", "BackgroundColor3")
         Items.Inline = Library:Create("Frame",{Parent = Items.Outline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(54, 54, 54)})
                 
-        Items.Accent = Library:Create("Frame",{Parent = Items.Inline.Instance; BackgroundTransparency = 0; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
+        Items.Accent = Library:Create("Frame",{Parent = Items.Inline.Instance; BackgroundTransparency = 1; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
         
         local DarkerAccent = Themes.Preset.Accent:Lerp(Color3.fromRGB(0, 0, 0), 0)
 
