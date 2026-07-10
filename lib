@@ -682,17 +682,22 @@ local Library; do
         Items.Inline = Library:Create("Frame",{Parent = Items.Outline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(54, 54, 54)})
         
         -- The primary solid box indicator
-        Items.Accent = Library:Create("Frame",{Parent = Items.Inline.Instance; BackgroundTransparency = 1; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Themes.Preset.Accent}):Themify("Accent", "BackgroundColor3")
         
-        local DarkerAccent = Themes.Preset.Accent:Lerp(Color3.fromRGB(0, 0, 0), 0.1)
+        -- Делаем BackgroundColor3 белым, чтобы UIGradient красил его чистыми цветами без искажений
+        Items.Accent = Library:Create("Frame",{Parent = Items.Inline.Instance; BackgroundTransparency = 1; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
+        
+        -- Вытаскиваем точный цвет акцента
+        local AccentColor = Themes.Preset.Accent
+        -- Делаем низ лишь слегка темнее (на 15%)
+        local DarkerAccent = AccentColor:Lerp(Color3.fromRGB(0, 0, 0), 0.15)
 
-        -- Динамический градиент для Accent
+        -- Чистый градиент
         Items.AccentGradient = Library:Create("UIGradient",{
             Rotation = 90; 
             Parent = Items.Accent.Instance; 
             Color = ColorSequence.new{
-                ColorSequenceKeypoint.new(0, Themes.Preset.Accent), -- Сверху чистый Accent
-                ColorSequenceKeypoint.new(1, DarkerAccent)          -- Снизу тот же Accent, но притемненный
+                ColorSequenceKeypoint.new(0, AccentColor),   -- Сверху оригинальный сочный Accent
+                ColorSequenceKeypoint.new(1, DarkerAccent)   -- Снизу аккуратный полутон
             }
         })
 
