@@ -150,19 +150,19 @@ local Library; do
        Preset = {
             ["High Contrast"] = Color3.fromRGB(38, 38, 38),
             ["Low Contrast"] = Color3.fromRGB(25, 25, 25),
-            ["TabButtonUnselected"] = Color3.fromRGB(0, 0, 0),
+            ["TabButtonUnselected"] = Color3.fromRGB(17, 17, 17),
 
             ["Outline"] = Color3.fromRGB(1, 1, 1),
-            ["Inline"] = Color3.fromRGB(28, 28, 29),
+            ["Inline"] = Color3.fromRGB(54, 54, 54),
 
-            ["MenuBackground"] = Color3.fromRGB(0, 0, 0),
-            ["PageBackground"] = Color3.fromRGB(1, 1, 1),
-            ["SectionBackground"] = Color3.fromRGB(0, 0, 0),
+            ["MenuBackground"] = Color3.fromRGB(29, 29, 29),
+            ["PageBackground"] = Color3.fromRGB(24, 24, 24),
+            ["SectionBackground"] = Color3.fromRGB(19, 19, 19),
 
             ["TextMisc"] = Color3.fromRGB(134, 134, 134),
             ["TextMain"] = Color3.fromRGB(160, 160, 160),
 
-            ["Accent"] = Color3.fromRGB(140, 136, 197),
+            ["Accent"] = Color3.fromRGB(245, 20, 136),
         },
         Utility = {},
         GradientsThemes = {}, 
@@ -5023,6 +5023,20 @@ end
                 Label = Section:AddLabel({Text = "Current Config: ".. readfile(Library.Directory.."/Autoload.txt")})
 
                 ConfigHolder:UpdateConfigList()
+            end
+
+            local Section = Settings:AddSection({Title = "Menu", Side = 1}) do 
+                Section:AddDropdown({Text = "Easing Style", Flag = "Easing Style", Options = {"Linear", "Cubic", "Quad", "Quart", "Quint", "Sine", "Exponential", "Back", "Bounce", "Elastic", "Circular"}, Default = tostring(Library.EasingStyle):match("%.([%w]+)$"), Callback = function(Option) Library.EasingStyle = Enum.EasingStyle[Option] end})
+                Section:AddDropdown({Text = "Easing Direction", Flag = "Easing Direction", Options = {"In", "Out", "InOut"}, Default = tostring(Library.EasingDirection):match("%.([%w]+)$"), Callback = function(Option) Library.EasingDirection = Enum.EasingDirection[Option] end})
+                Section:AddSlider({Text = "Tweening Speed", Flag = "Tweening Speed", Min = 0, Max = 2, Default = 0.3, Suffix = "s", Decimal = 0.01, Callback = function(Text) Library.TweeningSpeed = Text  end})
+                Section:AddSlider({Text = "Dragging Speed", Flag = "Dragging Speed", Min = 0, Max = 2, Default = 0.05, Suffix = "s", Decimal = 0.01, Callback = function(Text) Library.DraggingSpeed = Text end})
+
+                Section:AddInput({Text = "Prefix", Default = Library.Window.Prefix, Callback = function(Text)
+                    Library.Window.Prefix = Text
+                end, Flag = "Prefix"})
+                Section:AddInput({Text = "Suffix", Default = Library.Window.Suffix, Callback = function(Text)
+                    Library.Window.Suffix = Text
+                end, Flag = "Suffix"})
             end
 
             local Section = Settings:AddSection({Title = "HUD", Side = 2}) do 
