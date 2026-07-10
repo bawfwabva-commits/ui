@@ -5025,67 +5025,13 @@ end
                 ConfigHolder:UpdateConfigList()
             end
 
-            local Section = Settings:AddSection({Title = "Menu", Side = 1}) do 
-                Section:AddDropdown({Text = "Easing Style", Flag = "Easing Style", Options = {"Linear", "Cubic", "Quad", "Quart", "Quint", "Sine", "Exponential", "Back", "Bounce", "Elastic", "Circular"}, Default = tostring(Library.EasingStyle):match("%.([%w]+)$"), Callback = function(Option) Library.EasingStyle = Enum.EasingStyle[Option] end})
-                Section:AddDropdown({Text = "Easing Direction", Flag = "Easing Direction", Options = {"In", "Out", "InOut"}, Default = tostring(Library.EasingDirection):match("%.([%w]+)$"), Callback = function(Option) Library.EasingDirection = Enum.EasingDirection[Option] end})
-                Section:AddSlider({Text = "Tweening Speed", Flag = "Tweening Speed", Min = 0, Max = 2, Default = 0.3, Suffix = "s", Decimal = 0.01, Callback = function(Text) Library.TweeningSpeed = Text  end})
-                Section:AddSlider({Text = "Dragging Speed", Flag = "Dragging Speed", Min = 0, Max = 2, Default = 0.05, Suffix = "s", Decimal = 0.01, Callback = function(Text) Library.DraggingSpeed = Text end})
-
-                Section:AddInput({Text = "Prefix", Default = Library.Window.Prefix, Callback = function(Text)
-                    Library.Window.Prefix = Text
-                end, Flag = "Prefix"})
-                Section:AddInput({Text = "Suffix", Default = Library.Window.Suffix, Callback = function(Text)
-                    Library.Window.Suffix = Text
-                end, Flag = "Suffix"})
-            end
-
             local Section = Settings:AddSection({Title = "HUD", Side = 2}) do 
             Section:AddToggle({Text = "Watermark", Default = true, Callback = self.SetWatermarkVisibility})
             Section:AddDropdown({Text = "Options", Flag = "WatermarkSettings", Options = {"Title", "Fps", "Ping", "Game Name", "User ID", "LocalPlayer Name", "Date"}, Multi = true, Default = {"Title", "Fps", "Ping"}})
             Section:AddSlider({Text = "Refresh Rate", Flag = "Refresh Rate", Min = 0, Max = 2, Default = 0.1, Suffix = "s", Decimal = 0.01})
             Section:AddToggle({Text = "Keybind List", Default = true, Callback = self.SetKeybindListVisibility}) 
                 
-            local Section = Settings:AddSection({Title = "Theming", Side = 2})
-                for Name,Value in Themes.Preset do 
-                    Section:AddColorPicker({Text = Name:gsub("(%l)(%u)", "%1 %2"), Default = Value, Flag = Name, NoCallback = true, Callback = function(Color)
-                        Library:Refresh(Name, Color)
-                    end})
-                end 
-
-                local Input;
-                ThemeHolder = Section:AddDropdown({Text = "Themes", Callback = function(Option) if Input then Input.Set(Option) end end})
-                Input = Section:AddInput({Text = "Config Name:", Flag = "Theming_Text_Name", PlaceHolder = "Theme name here..."})
-                Section:AddButton({Text = "Save", Callback = function() 
-                    Library:SaveTheme(Flags["Theming_Text_Name"])
-                    ThemeHolder:UpdateThemingList()
-                end})
-                :AddButton({Text = "Load", Callback = function()
-                    if not Flags["Theming_Text_Name"] then 
-                        return 
-                    end 
-
-                    if not isfile(Library.Directory .. "/Themes/" .. Flags["Theming_Text_Name"] .. ".Cfg") then 
-                        return 
-                    end 
-
-                    Library:LoadConfig(readfile(Library.Directory .. "/Themes/" .. Flags["Theming_Text_Name"] .. ".Cfg"))
-                    ThemeHolder:UpdateThemingList()
-                end})
-
-                Section:AddButton({Text = "Delete", Callback = function() 
-                    if not Flags["Theming_Text_Name"] then 
-                        return 
-                    end 
-
-                    Library:DeleteTheme(Flags["Theming_Text_Name"])
-                    ThemeHolder:UpdateThemingList()
-                end})
-                :AddButton({Text = "Refresh", Callback = function() 
-                    ThemeHolder:UpdateThemingList()
-                end})
-
-                ThemeHolder:UpdateThemingList()
-            end 
+            
         end
     end 
 
