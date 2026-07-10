@@ -148,15 +148,15 @@ local Library; do
 
     local Themes = {
        Preset = {
-            ["High Contrast"] = Color3.fromRGB(28, 28, 28),
-            ["Low Contrast"] = Color3.fromRGB(15, 15, 15),
-            ["TabButtonUnselected"] = Color3.fromRGB(7, 7, 7),
+            ["High Contrast"] = Color3.fromRGB(38, 38, 38),
+            ["Low Contrast"] = Color3.fromRGB(25, 25, 25),
+            ["TabButtonUnselected"] = Color3.fromRGB(17, 17, 17),
 
             ["Outline"] = Color3.fromRGB(1, 1, 1),
-            ["Inline"] = Color3.fromRGB(40, 40, 40),
+            ["Inline"] = Color3.fromRGB(54, 54, 54),
 
-            ["MenuBackground"] = Color3.fromRGB(15, 15, 15),
-            ["PageBackground"] = Color3.fromRGB(10, 10, 10),
+            ["MenuBackground"] = Color3.fromRGB(29, 29, 29),
+            ["PageBackground"] = Color3.fromRGB(24, 24, 24),
             ["SectionBackground"] = Color3.fromRGB(19, 19, 19),
 
             ["TextMisc"] = Color3.fromRGB(134, 134, 134),
