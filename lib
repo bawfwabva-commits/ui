@@ -693,13 +693,15 @@ local Library; do
         Items.Inline = Library:Create("Frame",{Parent = Items.Outline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(54, 54, 54)})
         
         -- The primary solid box indicator
-        Items.Accent = Library:Create("Frame",{Parent = Items.Inline.Instance; BackgroundTransparency = 1; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Themes.Preset.Accent}):Themify("Accent", "BackgroundColor3")
-        
 
-        }):Themify("Accent", "Color")
+        local AccentColor = Themes.Preset.Accent
+        local DarkerAccent = AccentColor:Lerp(Color3.fromRGB(0, 0, 0), 0.15)
+
+        Items.Accent = Library:Create("Frame",{Parent = Items.Inline.Instance; BackgroundTransparency = 1; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); ZIndex = 2; BorderSizePixel = 0; BackgroundColor3 = Themes.Preset.Accent}):Themify("Accent", "BackgroundColor3")
+        Items.UIGradient2 = Library:Create("UIGradient", {Rotation = 90; Parent = Items.Accent.Instance; Color = ColorSeq{ColorKey(0, AccentColor), ColorKey(1, DarkerAccent)}})
 
         Items.Gray = Library:Create("Frame",{Parent = Items.Inline.Instance; Position = UDim2.new(0, 1, 0, 1); Size = UDim2.new(1, -2, 1, -2); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
-        Items.UIGradient = Library:Create("UIGradient",{Rotation = 90; Parent = Items.Gray.Instance; Color = ColorSeq{ColorKey(0, Color3.fromRGB(38, 38, 38)), ColorKey(1, Color3.fromRGB(25, 25, 25))}})
+        Items.UIGradient = Library:Create("UIGradient", {Rotation = 90; Parent = Items.Gray.Instance; Color = ColorSeq{ColorKey(0, Color3.fromRGB(38, 38, 38)), ColorKey(1, Color3.fromRGB(25, 25, 25))}})
         Items.TextLabel = Library:Create("TextLabel",{TextColor3 = Themes.Preset.TextMain; Text = Cfg.Text; Parent = Items.Object.Instance; BorderSizePixel = 0; BackgroundTransparency = 1; Position = UDim2.new(0, 18, 0, 1); RichText = true; AutomaticSize = Enum.AutomaticSize.XY; TextXAlignment = Enum.TextXAlignment.Left; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
         Items.UIStroke = Library:Create("UIStroke",{Parent = Items.TextLabel.Instance; LineJoinMode = Enum.LineJoinMode.Miter})
         Items.ComponentsHolder = Library:Create("Frame",{Parent = Items.Object.Instance; Position = UDim2.new(1, 0, 0, 0); Size = UDim2.new(0, 0, 0, 14); BorderSizePixel = 0; BackgroundColor3 = Color3.fromRGB(255, 255, 255)})
